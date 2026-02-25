@@ -1,0 +1,58 @@
+/* Основной контейнер */
+.container {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b14 100%);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px 10px rgba(0, 0, 0, 0.9);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Статистика */
+.stats {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Главная кнопка клика */
+.click-button {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%);
+  border: none;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+  transition: all 0.1s ease;
+  background-image: url("/img/hamster.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.click-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(255, 107, 53, 0.5);
+}
+
+.click-button:active {
+  transform: scale(0.95);
+}
+
+/* Футер */
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #ff9a56;
+  font-size: 0.9em;
+}
