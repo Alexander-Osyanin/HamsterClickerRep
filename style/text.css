@@ -1,0 +1,26 @@
+/* Заголовки и текст */
+h1 {
+  text-align: center;
+  color: #ff6b35;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+.version {
+  text-align: center;
+  color: #ff9a56;
+  margin-bottom: 30px;
+  font-size: 0.9em;
+}
+
+.coins {
+  font-size: 3em;
+  color: #ff6b35;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.label {
+  color: #ff9a56;
+  font-size: 1.2em;
+}

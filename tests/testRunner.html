@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HamsterClicker - Тесты</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff00;
+            margin-bottom: 30px;
+        }
+        #output {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .success {
+            color: #00ff00;
+        }
+        .error {
+            color: #ff0000;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HamsterClicker - Автоматическое тестирование</h1>
+        <button onclick="runTests()">▶ Запустить тесты</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // Перехват console.log и console.error
+        const outputDiv = document.getElementById('output');
+        
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            const message = args.join(' ');
+            const span = document.createElement('span');
+            span.className = 'success';
+            span.textContent = message + '\n';
+            outputDiv.appendChild(span);
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            const message = args.join(' ');
+            const span = document.createElement('span');
+            span.className = 'error';
+            span.textContent = message + '\n';
+            outputDiv.appendChild(span);
+            originalError.apply(console, args);
+        };
+
+        async function runTests() {
+            outputDiv.innerHTML = '';
+            
+            // Загрузка и выполнение тестов
+            try {
+                const response = await fetch('./autoTests.js');
+                const code = await response.text();
+                eval(code);
+            } catch (error) {
+                console.error('Ошибка при загрузке тестов:', error);
+            }
+        }
+    </script>
+</body>
+</html>
