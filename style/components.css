@@ -4,8 +4,15 @@
   border-radius: 20px;
   padding: 40px;
   box-shadow: 0 10px 30px 10px rgba(0, 0, 0, 0.9);
-  max-width: 500px;
+  max-width: 1200px;
   width: 100%;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 40px;
+  align-items: center;
 }
 
 /* Статистика */
@@ -14,15 +21,21 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
+  padding: 30px;
   text-align: center;
+}
+
+.multiplier {
+  color: #ffd700;
+  font-size: 1.3em;
+  margin-top: 15px;
+  font-weight: bold;
 }
 
 /* Главная кнопка клика */
 .click-button {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%);
   border: none;
@@ -34,7 +47,7 @@
   display: block;
   box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
   transition: all 0.1s ease;
-  background-image: url("/img/hamster.png");
+  background-image: url("../img/hamster.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -49,10 +62,122 @@
   transform: scale(0.95);
 }
 
+/* Магазин улучшений */
+.shop {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.shop h2 {
+  color: #ff6b35;
+  font-size: 1.6em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Список улучшений */
+.shop-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Элемент улучшения */
+.shop-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 18px;
+  transition: all 0.3s ease;
+}
+
+.shop-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 154, 86, 0.5);
+  transform: translateX(5px);
+}
+
+/* Информация об улучшении */
+.shop-item-info {
+  margin-bottom: 12px;
+}
+
+.shop-item-name {
+  color: #ff9a56;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.shop-item-power {
+  color: #ffcd56;
+  font-size: 1.05em;
+}
+
+/* Блок покупки */
+.shop-item-buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shop-item-cost {
+  color: #ffd700;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.shop-item-cost::after {
+  content: ' 💰';
+}
+
+/* Кнопка покупки */
+.shop-item-btn {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.shop-item-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5);
+}
+
+.shop-item-btn.disabled {
+  background: linear-gradient(135deg, #555 0%, #777 100%);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.shop-item-btn.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 /* Футер */
 .footer {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
   color: #ff9a56;
-  font-size: 0.9em;
+  font-size: 1em;
+}
+
+/* Адаптивность */
+@media (max-width: 1100px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .stats, .shop {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 }
