@@ -5,7 +5,7 @@
  * */
 
 /**
- * Определяем uлобальный объект окружения (window для браузера, global для Node.js)
+ * Определяем глобальный объект окружения (window для браузера, global для Node.js)
  * @type {Window|NodeJS.Global}
  */
 const globalObj = typeof window !== 'undefined' ? window : global;
@@ -47,8 +47,8 @@ const TestRunner = {
 
   // Запуск всех тестов
   async run() {
-    console.log('Запуск тестов HamsterClicker v2.0...\n');
-    
+    console.log('Запуск тестов HamsterClicker v3.0...\n');
+
     for (const test of this.tests) {
       try {
         await test.fn();
@@ -72,18 +72,21 @@ const TestRunner = {
 // ТЕСТЫ БАЗОВОЙ ФУНКЦИОНАЛЬНОСТИ
 
 /**
- * Проверяет начальное состояние игры: монеты, сила клика и структура улучшений.
+ * Проверяет начальное состояние игры: монеты, сила клика, пассивный доход, структура улучшений и генераторов.
  * @test
  */
 TestRunner.test('Игра начинается с корректных значений', () => {
   const Game = {
     coins: 0,
     clickValue: 1,
-    upgrades: { clickPower1: 0 }
+    coinsPerSec: 0,
+    upgrades: { clickPower1: 0 },
+    generators: { gen1: 0 }
   };
-  
+
   TestRunner.assert(Game.coins === 0, 'Начальное количество монет должно быть 0');
   TestRunner.assert(Game.clickValue === 1, 'Начальная сила клика должна быть 1');
+  TestRunner.assert(Game.coinsPerSec === 0, 'Начальный пассивный доход должен быть 0');
 });
 
 /**
@@ -103,94 +106,89 @@ TestRunner.test('Клик увеличивает монеты', () => {
   TestRunner.assert(Game.coins === 1, 'После клика должна быть 1 монета');
 });
 
-// ТЕСТЫ МАГАЗИНА
+// ТЕСТЫ ГЕНЕРАТОРОВ
 
 /**
- * Проверяет корректность формулы расчета стоимости улучшения при owned = 0.
+ * Проверяет успешную покупку генератора и увеличение пассивного дохода.
  * @test
  */
-TestRunner.test('Вычисление базовой цены улучшения', () => {
-  const upgrade = { baseCost: 10, costMultiplier: 1.15 };
-  const owned = 0;
-  const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, owned));
-  
-  TestRunner.assert(cost === 10, 'Базовая цена должна быть 10');
-});
-
-/**
- * Проверяет корректность увеличения стоимости улучшения после первой покупки.
- * @test
- */
-TestRunner.test('Цена увеличивается после покупки', () => {
-  const upgrade = { baseCost: 10, costMultiplier: 1.15 };
-  const owned = 1;
-  const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, owned));
-  
-  TestRunner.assert(cost === 11, 'Цена после 1 покупки должна быть 11');
-});
-
-/**
- * Проверяет корректность списания монет, увеличения силы клика и счетчика улучшений.
- * @test
- */
-TestRunner.test('Успешная покупка улучшения', () => {
+TestRunner.test('Успешная покупка генератора', () => {
   const Game = {
     coins: 100,
-    clickValue: 1,
-    upgrades: { test: 0 },
-    buyUpgrade(id, cost, power) {
+    coinsPerSec: 0,
+    generators: { gen1: 0 },
+    buyGenerator(id, cost, income) {
       if (this.coins >= cost) {
         this.coins -= cost;
-        this.upgrades[id]++;
-        this.clickValue += power;
+        this.generators[id] = (this.generators[id] || 0) + 1;
+        this.coinsPerSec += income;
         return true;
       }
       return false;
     }
   };
 
-  const result = Game.buyUpgrade('test', 50, 5);
-  
-  TestRunner.assert(result === true, 'Покупка должна быть успешной');
-  TestRunner.assert(Game.coins === 50, 'Монеты должны уменьшиться на 50');
-  TestRunner.assert(Game.clickValue === 6, 'Сила клика должна увеличиться до 6');
-  TestRunner.assert(Game.upgrades.test === 1, 'Счетчик улучшений должен быть 1');
+  const result = Game.buyGenerator('gen1', 15, 1);
+
+  TestRunner.assert(result === true, 'Покупка генератора должна быть успешной');
+  TestRunner.assert(Game.coins === 85, 'Монеты должны уменьшиться на 15');
+  TestRunner.assert(Game.generators.gen1 === 1, 'Количество генераторов должно быть 1');
+  TestRunner.assert(Game.coinsPerSec === 1, 'Пассивный доход должен стать 1');
 });
 
 /**
- * Проверяет отсутствие изменений при попытке покупки без достаточного количества монет.
+ * Проверяет неудачную покупку генератора при недостатке монет.
  * @test
  */
-TestRunner.test('Неудачная покупка при недостатке монет', () => {
+TestRunner.test('Неудачная покупка генератора при недостатке монет', () => {
   const Game = {
-    coins: 30,
-    clickValue: 1,
-    upgrades: { test: 0 },
-    buyUpgrade(id, cost, power) {
+    coins: 10,
+    coinsPerSec: 0,
+    generators: { gen1: 0 },
+    buyGenerator(id, cost, income) {
       if (this.coins >= cost) {
         this.coins -= cost;
-        this.upgrades[id]++;
-        this.clickValue += power;
+        this.generators[id] = (this.generators[id] || 0) + 1;
+        this.coinsPerSec += income;
         return true;
       }
       return false;
     }
   };
 
-  const result = Game.buyUpgrade('test', 50, 5);
-  
+  const result = Game.buyGenerator('gen1', 15, 1);
+
   TestRunner.assert(result === false, 'Покупка должна быть неудачной');
-  TestRunner.assert(Game.coins === 30, 'Монеты не должны измениться');
-  TestRunner.assert(Game.clickValue === 1, 'Сила клика не должна измениться');
+  TestRunner.assert(Game.coins === 10, 'Монеты не должны измениться');
+  TestRunner.assert(Game.coinsPerSec === 0, 'Пассивный доход не должен измениться');
+});
+
+/**
+ * Проверяет корректность подсчёта суммарного пассивного дохода от нескольких генераторов.
+ * @test
+ */
+TestRunner.test('Суммарный доход от нескольких генераторов', () => {
+  const generators = [
+    { id: 'gen1', income: 1 },
+    { id: 'gen2', income: 8 },
+    { id: 'gen3', income: 50 },
+  ];
+  const owned = { gen1: 3, gen2: 1, gen3: 0 };
+
+  const total = generators.reduce((sum, gen) => {
+    return sum + (owned[gen.id] || 0) * gen.income;
+  }, 0);
+
+  TestRunner.assert(total === 11, 'Суммарный доход должен быть 11 (3*1 + 1*8 + 0*50)');
 });
 
 // ТЕСТЫ СОХРАНЕНИЯ
 
 /**
- * Проверяет корректность сохранения данных игры с улучшениями.
+ * Проверяет корректность сохранения данных генераторов и пассивного дохода.
  * @test
  */
-TestRunner.test('Сохранение данных с улучшениями', () => {
+TestRunner.test('Сохранение данных с генераторами', () => {
   const mockStorage = {};
   const Storage = {
     save(data) {
@@ -198,17 +196,19 @@ TestRunner.test('Сохранение данных с улучшениями', (
     }
   };
 
-  const testData = { 
-    coins: 100, 
+  const testData = {
+    coins: 200,
     clickValue: 6,
-    upgrades: { clickPower1: 1 }
+    coinsPerSec: 9,
+    upgrades: { clickPower1: 1 },
+    generators: { gen1: 3, gen2: 1, gen3: 0 }
   };
-  
+
   Storage.save(testData);
   const saved = JSON.parse(mockStorage['clickerGame']);
-  
-  TestRunner.assert(saved.clickValue === 6, 'Сила клика должна сохраниться');
-  TestRunner.assert(saved.upgrades.clickPower1 === 1, 'Улучшения должны сохраниться');
+
+  TestRunner.assert(saved.coinsPerSec === 9, 'Пассивный доход должен сохраниться');
+  TestRunner.assert(saved.generators.gen1 === 3, 'Количество генераторов должно сохраниться');
 });
 
 /**

@@ -38,7 +38,7 @@ export const Shop = {
   // Инициализация магазина
   // game - Ссылка на основной объект игры
   // Создает элементы магазина и настраивает обработчики
-  
+
   init(game) {
     this.game = game;
     this.renderShop();
@@ -72,7 +72,7 @@ export const Shop = {
   buyUpgrade(upgrade) {
     const cost = this.getCurrentCost(upgrade);
     const success = this.game.buyUpgrade(upgrade.id, cost, upgrade.power);
-    
+
     if (success) {
       this.updateShop(this.game);
     }
