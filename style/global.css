@@ -8,7 +8,7 @@
 body {
   font-family: "Arial", sans-serif;
   background: linear-gradient(135deg, #ff9a56 0%, #ffcd56 100%);
-  background-image: url("/img/money.png");
+  background-image: url("../img/money.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -17,4 +17,27 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+/* Плавающий текст при клике */
+.floating-text {
+  position: fixed;
+  font-size: 2em;
+  font-weight: bold;
+  color: #ff6b35;
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
 }
