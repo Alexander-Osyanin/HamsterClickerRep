@@ -19,7 +19,7 @@
 
 ---
 
-3. В терминале вашего редактора кода пишете команду `git clone https://github.com/Alexander-Osyanin/HamsterClicker`
+3. В терминале вашего редактора кода пишете команду `git clone -b ClickerTeam2.1 https://github.com/Alexander-Osyanin/HamsterClickerRep`
 
 ![guide2](img/guide/guide2.png)
 
