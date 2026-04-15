@@ -14,7 +14,7 @@
 
 ![guide1](img/guide/guide1.png)
 
-3. В терминале вашего редактора кода пишете команду `git clone https://github.com/Alexander-Osyanin/HamsterClicker`
+3. В терминале вашего редактора кода пишете команду `git clone -b (название нужной ветки) https://github.com/Alexander-Osyanin/HamsterClickerRep`
 
 ![guide2](img/guide/guide2.png)
 
