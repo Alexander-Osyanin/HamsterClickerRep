@@ -41,6 +41,77 @@
   opacity: 0.9;
 }
 
+/* Блок уровня */
+.level-block {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.level-title {
+  color: #ff6b35;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.level-name {
+  color: #ff9a56;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+/* Прогресс-бар */
+.progress-bar-wrap {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  height: 12px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff6b35 0%, #ff9a56 100%);
+  border-radius: 8px;
+  transition: width 0.4s ease;
+}
+
+.progress-label {
+  color: rgba(255, 205, 86, 0.7);
+  font-size: 0.85em;
+}
+
+/* Расширенная статистика */
+.stats-block {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: left;
+}
+
+.stats-title {
+  color: #ff6b35;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.stats-row {
+  color: #ffcd56;
+  font-size: 0.95em;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-row span {
+  color: #ffd700;
+  font-weight: bold;
+}
+
 /* Главная кнопка клика */
 .click-button {
   width: 250px;
@@ -81,7 +152,7 @@
 /* Табы переключения разделов магазина */
 .shop-tabs {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 20px;
 }
 
@@ -90,9 +161,9 @@
   background: rgba(255, 255, 255, 0.08);
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
-  padding: 10px 8px;
+  padding: 8px 4px;
   color: #ff9a56;
-  font-size: 1em;
+  font-size: 0.85em;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -164,6 +235,21 @@
   transform: translateX(5px);
 }
 
+/* Достижение — выполненное */
+.achievement-item.unlocked {
+  border-color: rgba(255, 215, 0, 0.6);
+  background: rgba(255, 215, 0, 0.08);
+}
+
+/* Достижение — заблокированное */
+.achievement-item.locked {
+  opacity: 0.45;
+}
+
+.achievement-item.locked:hover {
+  transform: none;
+}
+
 /* Информация об улучшении */
 .shop-item-info {
   margin-bottom: 12px;
@@ -232,6 +318,24 @@
 .shop-item-btn.disabled:hover {
   transform: none;
   box-shadow: none;
+}
+
+/* Карточка достижения */
+.achievement-desc {
+  color: #ffcd56;
+  font-size: 0.95em;
+  margin-top: 4px;
+}
+
+.achievement-status {
+  margin-top: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.achievement-item.unlocked .achievement-status {
+  color: #ffd700;
 }
 
 /* Футер */
