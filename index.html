@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HamsterClicker v3.0</title>
+    <title>HamsterClicker v4.0</title>
     <link rel="stylesheet" href="style/global.css" />
     <link rel="stylesheet" href="style/text.css" />
     <link rel="stylesheet" href="style/components.css" />
@@ -11,25 +11,45 @@
   <body>
     <div class="container">
       <h1>Хомячий кликер</h1>
-      <div class="version">Версия 3.0 - Пассивный Доход</div>
+      <div class="version">Версия 4.0 - Полная Версия</div>
 
       <div class="game-layout">
-        <!-- Колонка 1: Статистика -->
+        <!-- Колонка 1: Статистика + Уровень -->
         <div class="stats">
           <div class="coins" id="coins">0</div>
           <div class="label">Монет</div>
           <div class="multiplier">Множитель: <span id="multiplier">1</span>x</div>
           <div class="passive-income">В секунду: <span id="coinsPerSec">0</span> 💰</div>
+
+          <div class="level-block">
+            <div class="level-title">Уровень <span id="level">1</span></div>
+            <div class="level-name" id="levelName">Новичок</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-label">
+              <span id="progressCurrent">0</span> / <span id="progressNext">100</span>
+            </div>
+          </div>
+
+          <div class="stats-block">
+            <div class="stats-title">📊 Статистика</div>
+            <div class="stats-row">Кликов: <span id="totalClicks">0</span></div>
+            <div class="stats-row">Заработано: <span id="totalEarned">0</span> 💰</div>
+            <div class="stats-row">Куплено: <span id="totalPurchases">0</span></div>
+            <div class="stats-row">Время в игре: <span id="playTime">0:00</span></div>
+          </div>
         </div>
 
         <!-- Колонка 2: Кнопка клика -->
         <button class="click-button" id="clickBtn"></button>
 
-        <!-- Колонка 3: Единый магазин с табами -->
+        <!-- Колонка 3: Магазин + Достижения -->
         <div class="shop">
           <div class="shop-tabs">
             <button class="shop-tab active" id="tab-upgrades">🛒 Улучшения</button>
             <button class="shop-tab" id="tab-generators">⚙️ Генераторы</button>
+            <button class="shop-tab" id="tab-achievements">🏆 Достижения</button>
           </div>
 
           <div class="shop-panel" id="panel-upgrades">
@@ -38,6 +58,10 @@
 
           <div class="shop-panel hidden" id="panel-generators">
             <div class="shop-items" id="generatorItems"></div>
+          </div>
+
+          <div class="shop-panel hidden" id="panel-achievements">
+            <div class="shop-items" id="achievementItems"></div>
           </div>
         </div>
       </div>
