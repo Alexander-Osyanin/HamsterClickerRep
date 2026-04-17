@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HamsterClicker v2.0</title>
+    <title>HamsterClicker v3.0</title>
     <link rel="stylesheet" href="style/global.css" />
     <link rel="stylesheet" href="style/text.css" />
     <link rel="stylesheet" href="style/components.css" />
@@ -11,7 +11,7 @@
   <body>
     <div class="container">
       <h1>Хомячий кликер</h1>
-      <div class="version">Версия 2.0 - Улучшения</div>
+      <div class="version">Версия 3.0 - Пассивный Доход</div>
 
       <div class="game-layout">
         <!-- Колонка 1: Статистика -->
@@ -19,20 +19,31 @@
           <div class="coins" id="coins">0</div>
           <div class="label">Монет</div>
           <div class="multiplier">Множитель: <span id="multiplier">1</span>x</div>
+          <div class="passive-income">В секунду: <span id="coinsPerSec">0</span> 💰</div>
         </div>
 
         <!-- Колонка 2: Кнопка клика -->
         <button class="click-button" id="clickBtn"></button>
 
-        <!-- Колонка 3: Магазин улучшений -->
+        <!-- Колонка 3: Единый магазин с табами -->
         <div class="shop">
-          <h2>🛒 Улучшения</h2>
-          <div class="shop-items" id="shopItems"></div>
+          <div class="shop-tabs">
+            <button class="shop-tab active" id="tab-upgrades">🛒 Улучшения</button>
+            <button class="shop-tab" id="tab-generators">⚙️ Генераторы</button>
+          </div>
+
+          <div class="shop-panel" id="panel-upgrades">
+            <div class="shop-items" id="shopItems"></div>
+          </div>
+
+          <div class="shop-panel hidden" id="panel-generators">
+            <div class="shop-items" id="generatorItems"></div>
+          </div>
         </div>
       </div>
 
       <div class="footer">💾 Прогресс автоматически сохраняется</div>
     </div>
-    <script type="module" src="/module/game.js"></script>
+    <script type="module" src="../HamsterClickerRep/module/game.js"></script>
   </body>
 </html>

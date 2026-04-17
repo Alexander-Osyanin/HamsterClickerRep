@@ -1,6 +1,7 @@
 import { Storage } from "./storage.js";
 import { UI } from "./UI.js";
 import { Shop } from "./shop.js";
+import { Generators } from "./generators.js";
 
 // Основной игровой модуль HamsterClicker
 // Управляет игровой логикой, состоянием и взаимодействием с пользователем
@@ -8,9 +9,12 @@ import { Shop } from "./shop.js";
 const Game = {
   // Текущее количество монет игрока
   coins: 0,
-  
+
   // Количество монет за один клик
   clickValue: 1,
+
+  // Пассивный доход в секунду
+  coinsPerSec: 0,
 
   // Объект для хранения купленных улучшений
   // Ключ - ID улучшения, значение - количество купленных копий
@@ -20,12 +24,22 @@ const Game = {
     clickPower3: 0,
   },
 
+  // Объект для хранения купленных генераторов пассивного дохода
+  // Ключ - ID генератора, значение - количество купленных единиц
+  generators: {
+    gen1: 0,
+    gen2: 0,
+    gen3: 0,
+  },
+
   // Инициализация игры
   // Загружает сохраненные данные, настраивает обработчики событий и отрисовывает UI
   init() {
     this.loadGame();
     this.setupEventListeners();
     Shop.init(this);
+    Generators.init(this);
+    UI.initTabs();
     this.render();
   },
 
@@ -44,11 +58,12 @@ const Game = {
     this.render();
     this.saveGame();
     Shop.updateShop(this);
+    Generators.updateGenerators(this);
     UI.animateClick(UI.elements.clickBtn);
     UI.showFloatingText(`+${this.clickValue}`, UI.elements.clickBtn);
   },
 
-  // Покупка улучшения
+  // Покупка улучшения клика
   // upgradeId - ID улучшения для покупки
   // cost - стоимость улучшения
   // power - увеличение силы клика
@@ -65,20 +80,48 @@ const Game = {
     return false;
   },
 
+  // Покупка генератора пассивного дохода
+  // generatorId - ID генератора для покупки
+  // cost - стоимость генератора
+  // income - доход в секунду от одной единицы генератора
+  // Возвращает true если покупка успешна, false если недостаточно монет
+  buyGenerator(generatorId, cost, income) {
+    if (this.coins >= cost) {
+      this.coins -= cost;
+      this.generators[generatorId] = (this.generators[generatorId] || 0) + 1;
+      this.coinsPerSec += income;
+      this.render();
+      this.saveGame();
+      return true;
+    }
+    return false;
+  },
+
+  // Начисление пассивных монет от генераторов
+  // amount - Количество монет для начисления
+  addPassiveCoins(amount) {
+    this.coins += amount;
+    this.render();
+    this.saveGame();
+  },
+
   // Обновление отображения игрового состояния
   // Синхронизирует UI с текущим состоянием игры
   render() {
     UI.updateCoins(this.coins);
     UI.updateMultiplier(this.clickValue);
+    UI.updateCoinsPerSec(this.coinsPerSec);
   },
 
   // Сохранение текущего состояния игры в localStorage
-  // Сохраняет количество монет, значение клика и купленные улучшения
+  // Сохраняет количество монет, значение клика, купленные улучшения и генераторы
   saveGame() {
     Storage.save({
       coins: this.coins,
       clickValue: this.clickValue,
+      coinsPerSec: this.coinsPerSec,
       upgrades: this.upgrades,
+      generators: this.generators,
     });
   },
 
@@ -89,7 +132,9 @@ const Game = {
     if (savedData) {
       this.coins = savedData.coins || 0;
       this.clickValue = savedData.clickValue || 1;
+      this.coinsPerSec = savedData.coinsPerSec || 0;
       this.upgrades = savedData.upgrades || this.upgrades;
+      this.generators = savedData.generators || this.generators;
     }
   },
 };

@@ -7,7 +7,7 @@ export const Storage = {
   // Сохранение данных в localStorage
   // Преобразует объект данных в JSON и сохраняет под ключом 'clickerGame'
   // data - Объект с данными игры для сохранения
-  
+
   save(data) {
     localStorage.setItem("clickerGame", JSON.stringify(data));
   },

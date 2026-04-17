@@ -32,6 +32,15 @@
   font-weight: bold;
 }
 
+/* Пассивный доход в секунду */
+.passive-income {
+  color: #ffcd56;
+  font-size: 1.1em;
+  margin-top: 10px;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
 /* Главная кнопка клика */
 .click-button {
   width: 250px;
@@ -62,21 +71,78 @@
   transform: scale(0.95);
 }
 
-/* Магазин улучшений */
+/* Магазин */
 .shop {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   padding: 25px;
 }
 
-.shop h2 {
-  color: #ff6b35;
-  font-size: 1.6em;
+/* Табы переключения разделов магазина */
+.shop-tabs {
+  display: flex;
+  gap: 8px;
   margin-bottom: 20px;
-  text-align: center;
 }
 
-/* Список улучшений */
+.shop-tab {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 8px;
+  color: #ff9a56;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-tab:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 154, 86, 0.4);
+}
+
+.shop-tab.active {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%);
+  border-color: #ff6b35;
+  color: white;
+}
+
+/* Панели магазина */
+.shop-panel {
+  display: block;
+  /* Фиксированная высота — ровно 3 товара (121px) + 2 gap (15px) = 393px */
+  height: 393px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 53, 0.4) transparent;
+}
+
+.shop-panel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.shop-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.shop-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 53, 0.4);
+  border-radius: 4px;
+}
+
+.shop-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 53, 0.7);
+}
+
+.shop-panel.hidden {
+  display: none;
+}
+
+/* Список улучшений / генераторов */
 .shop-items {
   display: flex;
   flex-direction: column;
@@ -113,6 +179,13 @@
 .shop-item-power {
   color: #ffcd56;
   font-size: 1.05em;
+}
+
+/* Строка со счётчиком купленных генераторов */
+.shop-item-owned {
+  color: rgba(255, 205, 86, 0.6);
+  font-size: 0.9em;
+  margin-top: 6px;
 }
 
 /* Блок покупки */
@@ -175,7 +248,7 @@
     grid-template-columns: 1fr;
     gap: 25px;
   }
-  
+
   .stats, .shop {
     max-width: 500px;
     margin: 0 auto;
